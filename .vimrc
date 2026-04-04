@@ -72,7 +72,7 @@ nnoremap <leader>b :ls<CR>:b<Space>
 " ── Search quality of life ────────────────────────────────
 nnoremap n nzzzv
 nnoremap N Nzzzv
-nnoremap <CR> :nohlsearch<CR><CR>
+nnoremap <Esc> :nohlsearch<CR>
 
 " ── Command-line convenience ──────────────────────────────
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
@@ -83,7 +83,6 @@ augroup c_cpp_programming
   autocmd BufRead,BufNewFile *.h setlocal filetype=c
   autocmd FileType c,cpp setlocal cindent
   autocmd FileType c,cpp setlocal cinoptions=:0,l1,t0,g0,(0
-  autocmd FileType c,cpp setlocal colorcolumn=80
   autocmd FileType c   setlocal makeprg=gcc\ -Wall\ -Wextra\ -g\ %\ -o\ %:r
   autocmd FileType cpp setlocal makeprg=g++\ -Wall\ -Wextra\ -std=c++17\ -g\ %\ -o\ %:r
   autocmd FileType c,cpp nnoremap <buffer> <F5> :make<CR>:copen<CR>
