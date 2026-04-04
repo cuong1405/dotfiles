@@ -84,10 +84,11 @@ augroup c_cpp_programming
   autocmd FileType c,cpp setlocal cindent
   autocmd FileType c,cpp setlocal cinoptions=:0,l1,t0,g0,(0
   autocmd FileType c,cpp setlocal colorcolumn=80
-  autocmd FileType c,cpp setlocal makeprg=gcc\ -Wall\ -Wextra\ -g\ %\ -o\ %:r
+  autocmd FileType c   setlocal makeprg=gcc\ -Wall\ -Wextra\ -g\ %\ -o\ %:r
+  autocmd FileType cpp setlocal makeprg=g++\ -Wall\ -Wextra\ -std=c++17\ -g\ %\ -o\ %:r
   autocmd FileType c,cpp nnoremap <buffer> <F5> :make<CR>:copen<CR>
   autocmd FileType c,cpp nnoremap <buffer> <leader>g :grep! "\b<C-R><C-W>\b"<CR>:copen<CR>
-augroup ENDugroup END
+augroup END
 
 " ── Colorscheme ───────────────────────────────
 set termguicolors
