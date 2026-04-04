@@ -87,7 +87,6 @@ augroup c_cpp_programming
   autocmd FileType c   setlocal makeprg=gcc\ -Wall\ -Wextra\ -g\ %\ -o\ %:r
   autocmd FileType cpp setlocal makeprg=g++\ -Wall\ -Wextra\ -std=c++17\ -g\ %\ -o\ %:r
   autocmd FileType c,cpp nnoremap <buffer> <F5> :make<CR>:copen<CR>
-  autocmd FileType c,cpp nnoremap <buffer> <leader>g :grep! "\b<C-R><C-W>\b"<CR>:copen<CR>
 augroup END
 
 " ── Colorscheme ───────────────────────────────
