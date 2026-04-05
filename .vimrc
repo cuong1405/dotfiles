@@ -66,7 +66,7 @@ augroup MyVimrc
 
   " usr_29.1: Recursive tags search (up to root).
   " To generate tags, run in project root: ctags -R .
-  autocmd FileType c,cpp setlocal tags=./tags;,tags
+  autocmd FileType c,cpp,java setlocal tags=./tags;,tags
 
   " usr_30.1: Auto-open Quickfix window if :make fails
   autocmd QuickFixCmdPost [^l]* nested cwindow
