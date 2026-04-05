@@ -1,94 +1,101 @@
-" ── General ───────────────────────────────────────────────
-set nocompatible
-filetype plugin indent on
-syntax on
-
-set encoding=utf-8
-set history=1000
-set hidden
-set autoread
-
-" ── Persistent undo ───────────────────────────────────────
-set undofile
-set undodir=~/.vim/undodir
-if !isdirectory($HOME.'/.vim/undodir')
-  call mkdir($HOME.'/.vim/undodir', 'p', 0700)
+" =============================================================================
+" usr_05.1: THE CANONICAL START
+" =============================================================================
+if filereadable($VIMRUNTIME . '/defaults.vim')
+  source $VIMRUNTIME/defaults.vim
 endif
 
-" ── UI ────────────────────────────────────────────────────
-set number
-set relativenumber
-set cursorline
-set colorcolumn=80
-set scrolloff=8
-set signcolumn=yes
-set showcmd
-set wildmenu
-set wildmode=longest:full,full
-set wildignore+=*.o,*.out,*.obj,*.d,tags
+" =============================================================================
+" usr_05.2: GLOBAL BEHAVIOR & UI
+" =============================================================================
+set hidden              " usr_07.4: Switch buffers without saving
+set mouse=a             " usr_05.2: Enable mouse in all modes
+set number              " usr_05.2: Show line numbers
+set relativenumber      " tips.txt: Better for vertical motions (j/k)
+set scrolloff=5         " tips.txt: Keep 5 lines of context around cursor
+set laststatus=2        " options.txt: Always show status line
+set showmatch           " usr_05.2: Briefly jump to matching bracket
+set colorcolumn=80      " options.txt: Visual guide for the 80-char limit
 
-" ── Search ────────────────────────────────────────────────
-set incsearch
-set hlsearch
-set ignorecase
-set smartcase
+" Search improvements
+set ignorecase          " usr_05.2: Ignore case in search patterns
+set smartcase           " usr_05.2: Override 'ignorecase' if pattern has caps
+set hlsearch            " usr_05.2: Highlight search matches
+set incsearch           " usr_05.2: Show match while typing
 
-" ── Indentation ───────────────────────────────────────────
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set smartindent
-
-" ── Performance ───────────────────────────────────────────
-set updatetime=100
-
-" ── File navigation (no plugins needed) ───────────────────
-set path+=**
-set tags=./tags,tags;/
-
-" ── Grep ──────────────────────────────────────────────────
-if executable('rg')
-  set grepprg=rg\ --vimgrep\ --smart-case
-  set grepformat=%f:%l:%c:%m
-else
-  set grepprg=grep\ -rn\ --\ $*
-  set grepformat=%f:%l:%c:%m,%f:%l:%m
+" Undo & Backups
+set backup              " usr_05.2: Keep a backup file
+if has('persistent_undo')
+  set undofile          " undo.txt: Undo persists after closing Vim
 endif
 
-" ── Leader ────────────────────────────────────────────────
+" =============================================================================
+" usr_06: COLORS & APPEARANCE
+" =============================================================================
+if has('termguicolors')
+  set termguicolors
+endif
+set background=dark
+
+try
+  colorscheme catppuccin
+catch /^Vim\%((\a\+)\)\=:E185/
+  colorscheme desert
+endtry
+
+" =============================================================================
+" usr_41.11: MAPPING BEST PRACTICES
+" =============================================================================
 let mapleader = " "
 
-" ── Quickfix navigation ───────────────────────────────────
-nnoremap ]q :cnext<CR>
-nnoremap [q :cprev<CR>
-nnoremap ]l :lnext<CR>
-nnoremap [l :lprev<CR>
+inoremap <C-U> <C-G>u<C-U> " usr_05.3: Make CTRL-U undoable
+nnoremap ' `               " Custom mark mapping
+nnoremap <silent> <leader>h :nohlsearch<CR> " Clear highlight
 
-" ── Buffer navigation ─────────────────────────────────────
-nnoremap ]b :bnext<CR>
-nnoremap [b :bprev<CR>
-nnoremap <leader>b :ls<CR>:b<Space>
+" =============================================================================
+" usr_43: FILETYPE & INDENTATION
+" =============================================================================
+filetype plugin indent on
 
-" ── Search quality of life ────────────────────────────────
-nnoremap n nzzzv
-nnoremap N Nzzzv
-nnoremap <Esc> :nohlsearch<CR>
-
-" ── Command-line convenience ──────────────────────────────
-cnoremap %% <C-R>=expand('%:h').'/'<CR>
-
-" ── C/C++ filetype settings ───────────────────────────────
-augroup c_cpp_programming
+" =============================================================================
+" usr_40.3 & usr_30: AUTOCOMMAND GROUPS
+" =============================================================================
+augroup MyVimrc
   autocmd!
-  autocmd BufRead,BufNewFile *.h setlocal filetype=c
-  autocmd FileType c,cpp setlocal cindent
-  autocmd FileType c,cpp setlocal cinoptions=:0,l1,t0,g0,(0
-  autocmd FileType c   setlocal makeprg=gcc\ -Wall\ -Wextra\ -g\ %\ -o\ %:r
-  autocmd FileType cpp setlocal makeprg=g++\ -Wall\ -Wextra\ -std=c++17\ -g\ %\ -o\ %:r
-  autocmd FileType c,cpp nnoremap <buffer> <F5> :make<CR>:copen<CR>
+
+  " usr_05.2: Set textwidth for text files
+  autocmd FileType text setlocal textwidth=78
+
+  " usr_05.2: Restore cursor position
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+    \ && index(['xxd', 'gitrebase'], &ft) == -1
+    \ && !&diff
+    \ | execute "normal! g`\""
+    \ | endif
+
+  " usr_44.11: Highlight trailing whitespace
+  autocmd Syntax * syn match ErrorMsg /\s\+$/
+
+  " usr_30: C-LIKE LANGUAGE OPTIMIZATIONS
+  " Enable smart C-style indentation
+  autocmd FileType c,cpp,java,php setlocal cindent
+  " usr_29.1: Recursive tags search (up to root)
+  " To generate tags, run in project root: ctags -R .
+  autocmd FileType c,cpp setlocal tags=./tags;,tags
+  " usr_30.1: Auto-open Quickfix window if :make fails
+  autocmd QuickFixCmdPost [^l]* nested cwindow
 augroup END
 
-" ── Colorscheme ───────────────────────────────
-set termguicolors
-colorscheme catppuccin
-set background=dark
+" =============================================================================
+" usr_05.5: OPTIONAL PLUGINS (Built-in)
+" =============================================================================
+if has('syntax') && has('eval')
+  packadd! matchit
+endif
+
+" =============================================================================
+" usr_41: SCRIPTING UTILITIES
+" =============================================================================
+command! Config edit $MYVIMRC
+command! Reload source $MYVIMRC | echo "Config reloaded."
