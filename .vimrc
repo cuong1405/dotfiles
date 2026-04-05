@@ -62,7 +62,7 @@ augroup MyVimrc
   " usr_30: C-LIKE LANGUAGE OPTIMIZATIONS
   " ===========================================================================
   " Enable smart C-style indentation (Already in defaults, but forced here)
-  autocmd FileType c,cpp,java,php setlocal cindent
+  autocmd FileType c,cpp,java setlocal cindent
 
   " usr_29.1: Recursive tags search (up to root).
   " To generate tags, run in project root: ctags -R .
