@@ -6,22 +6,18 @@ if filereadable($VIMRUNTIME . '/defaults.vim')
 endif
 
 " =============================================================================
-" usr_05.2: GLOBAL BEHAVIOR & UI
+" usr_05.2: GLOBAL BEHAVIOR & UI (Overrides & Additions)
 " =============================================================================
 set hidden              " usr_07.4: Switch buffers without saving
-set mouse=a             " usr_05.2: Enable mouse in all modes
 set number              " usr_05.2: Show line numbers
 set relativenumber      " tips.txt: Better for vertical motions (j/k)
-set scrolloff=5         " tips.txt: Keep 5 lines of context around cursor
 set laststatus=2        " options.txt: Always show status line
-set showmatch           " usr_05.2: Briefly jump to matching bracket
 set colorcolumn=80      " options.txt: Visual guide for the 80-char limit
 
-" Search improvements
+" Search improvements (Overrides)
 set ignorecase          " usr_05.2: Ignore case in search patterns
 set smartcase           " usr_05.2: Override 'ignorecase' if pattern has caps
 set hlsearch            " usr_05.2: Highlight search matches
-set incsearch           " usr_05.2: Show match while typing
 
 " Undo & Backups
 set backup              " usr_05.2: Keep a backup file
@@ -48,14 +44,8 @@ endtry
 " =============================================================================
 let mapleader = " "
 
-inoremap <C-U> <C-G>u<C-U> " usr_05.3: Make CTRL-U undoable
-nnoremap ' `               " Custom mark mapping
-nnoremap <silent> <leader>h :nohlsearch<CR> " Clear highlight
-
-" =============================================================================
-" usr_43: FILETYPE & INDENTATION
-" =============================================================================
-filetype plugin indent on
+nnoremap ' `               " Custom mark mapping (Exact column jump)
+nnoremap <silent> <leader>h :nohlsearch<CR> " Clear highlight quietly
 
 " =============================================================================
 " usr_40.3 & usr_30: AUTOCOMMAND GROUPS
@@ -66,29 +56,26 @@ augroup MyVimrc
   " usr_05.2: Set textwidth for text files
   autocmd FileType text setlocal textwidth=78
 
-  " usr_05.2: Restore cursor position
-  autocmd BufReadPost *
-    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-    \ && index(['xxd', 'gitrebase'], &ft) == -1
-    \ && !&diff
-    \ | execute "normal! g`\""
-    \ | endif
-
   " usr_44.11: Highlight trailing whitespace
   autocmd Syntax * syn match ErrorMsg /\s\+$/
 
+  " ===========================================================================
   " usr_30: C-LIKE LANGUAGE OPTIMIZATIONS
-  " Enable smart C-style indentation
+  " ===========================================================================
+  " Enable smart C-style indentation (Already in defaults, but forced here)
   autocmd FileType c,cpp,java,php setlocal cindent
-  " usr_29.1: Recursive tags search (up to root)
+
+  " usr_29.1: Recursive tags search (up to root).
   " To generate tags, run in project root: ctags -R .
   autocmd FileType c,cpp setlocal tags=./tags;,tags
+
   " usr_30.1: Auto-open Quickfix window if :make fails
   autocmd QuickFixCmdPost [^l]* nested cwindow
 augroup END
 
 " =============================================================================
 " usr_05.5: OPTIONAL PLUGINS (Built-in)
+" matchit is recommended in usr_05.5 but not enabled by defaults.vim.
 " =============================================================================
 if has('syntax') && has('eval')
   packadd! matchit
