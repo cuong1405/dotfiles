@@ -44,7 +44,8 @@ endtry
 " =============================================================================
 let mapleader = " "
 
-nnoremap <silent> <leader>h :nohlsearch<CR> " Clear highlight quietly
+" Clear highlight quietly
+nnoremap <silent> <leader>h :nohlsearch<CR>
 
 " =============================================================================
 " usr_40.3 & usr_30: AUTOCOMMAND GROUPS
