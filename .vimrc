@@ -44,7 +44,6 @@ endtry
 " =============================================================================
 let mapleader = " "
 
-nnoremap ' `               " Custom mark mapping (Exact column jump)
 nnoremap <silent> <leader>h :nohlsearch<CR> " Clear highlight quietly
 
 " =============================================================================
