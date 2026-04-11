@@ -109,3 +109,6 @@ endif
 " =============================================================================
 command! Config edit $MYVIMRC
 command! Reload source $MYVIMRC | nohlsearch | echo "Config reloaded."
+
+" quickfix.txt: Better grep workflow that stays put and opens results [2]
+command! -nargs=+ NewGrep execute 'silent grep! <args>' | redraw! | copen 10
