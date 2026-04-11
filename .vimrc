@@ -29,11 +29,11 @@ set ignorecase          " usr_05.2: Ignore case in search patterns
 set smartcase           " usr_05.2: Override 'ignorecase' if pattern has caps
 set hlsearch            " usr_05.2: Highlight search matches
 
-" quickfix.txt: External search configuration for ripgrep [2, 5, 6]
+" quickfix.txt: External search configuration for ripgrep
 if executable('rg')
-    " options.txt: Use ripgrep for the :grep command [1, 5]
+    " options.txt: Use ripgrep for the :grep command
     set grepprg=rg\ --vimgrep\ $*
-    " options.txt: Define how Vim parses ripgrep output (file:line:col:msg) [1, 5]
+    " options.txt: Define how Vim parses ripgrep output (file:line:col:msg)
     set grepformat=%f:%l:%c:%m
 endif
 
