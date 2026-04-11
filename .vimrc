@@ -14,6 +14,13 @@ set relativenumber      " options.txt: Essential for jump-distance navigation.
 set laststatus=2        " options.txt: Always show status line.
 set colorcolumn=80
 
+" indent.txt: Documentation assumes 4 for its C-indenting examples
+set shiftwidth=4
+set softtabstop=4
+
+" usr_25: Recommended for modern consistency (converts tabs to spaces)
+set expandtab
+
 " quickfix.txt 1.1: Prevent opening same file twice from lists.
 set switchbuf=useopen,usetab
 
