@@ -32,7 +32,7 @@ set hlsearch            " usr_05.2: Highlight search matches
 " quickfix.txt: External search configuration for ripgrep
 if executable('rg')
     " options.txt: Use ripgrep for the :grep command
-    set grepprg=rg\ --vimgrep\ $*
+    set grepprg=rg\ --vimgrep\ -S\ $*
     " options.txt: Define how Vim parses ripgrep output (file:line:col:msg)
     set grepformat=%f:%l:%c:%m
 endif
@@ -109,6 +109,3 @@ endif
 " =============================================================================
 command! Config edit $MYVIMRC
 command! Reload source $MYVIMRC | nohlsearch | echo "Config reloaded."
-
-" quickfix.txt: Better grep workflow that stays put and opens results [2]
-command! -nargs=+ NewGrep execute 'silent grep! <args>' | redraw! | copen 10
