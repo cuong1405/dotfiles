@@ -32,7 +32,7 @@ set hlsearch            " usr_05.2: Highlight search matches
 " quickfix.txt: External search configuration for ripgrep
 if executable('rg')
     " options.txt: Use ripgrep for the :grep command
-    set grepprg=rg\ --vimgrep\ -S\ $*
+    set grepprg=rg\ --vimgrep\ $*
     " options.txt: Define how Vim parses ripgrep output (file:line:col:msg)
     set grepformat=%f:%l:%c:%m
 endif
