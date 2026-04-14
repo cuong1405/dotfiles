@@ -16,7 +16,7 @@ set colorcolumn=80
 
 " indent.txt: Documentation assumes 4 for its C-indenting examples
 set shiftwidth=4
-set softtabstop=4
+set softtabstop=-1
 
 " usr_25: Recommended for modern consistency (converts tabs to spaces)
 set expandtab
