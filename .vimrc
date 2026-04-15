@@ -98,10 +98,8 @@ augroup END
 if has('syntax') && has('eval')
   packadd! matchit       " usr_05.5: Extend % matching.
   packadd! editorconfig  " usr_05.5: Style consistency.
-  packadd comment        " usr_05.5: gc for commenting (highly recommended!)
+  packadd comment        " usr_05.5: gc for commenting.
   packadd hlyank         " usr_05.5: Visual feedback when yanking.
-  packadd cfilter        " quickfix.txt: Filter lists via :Cfilter.
-  packadd helpcurwin     " tips.txt: Help in current window.
 endif
 
 " =============================================================================
