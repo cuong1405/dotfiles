@@ -54,7 +54,7 @@ endif
 set background=dark
 try
   colorscheme catppuccin
-catch /^Vim\%((\a\+)\)\=:E185/
+catch /E185/
   colorscheme desert
 endtry
 
@@ -106,4 +106,4 @@ endif
 " usr_05.1: SCRIPTING UTILITIES
 " =============================================================================
 command! Config edit $MYVIMRC
-command! Reload source $MYVIMRC | nohlsearch | echo "Config reloaded."
+command! Reload source $MYVIMRC | nohlsearch 
